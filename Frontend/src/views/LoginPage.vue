@@ -38,7 +38,7 @@
               </td>
               <td class="input-cell">
                 <select name="role" id="role" v-model="FormData.role">
-                  <option value="customer" default>Customer</option>
+                  <option value="customer" default selected>Customer</option>
                   <option value="restaurant">Restaurant</option>
                   <option value="delivery_partner">DeliveryPartner</option>
                 </select>
@@ -73,12 +73,17 @@ export default {
       FormData: {
         email: "",
         password: "",
-        role: "cusotomer",
+        role: "customer",
       },
     };
   },
   methods: {
     async handleSubmit() {
+      if(!this.FormData.email.trim() || !this.FormData.password.trim()){
+        alert("pls fill all the fields")
+        return
+      }
+
       let url = `http://localhost:5000/api/v1/login`;
       const config = {
         headers: {
@@ -100,8 +105,6 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap");
-
-
 
 .main {
     background: linear-gradient(135deg, #F8B500, #FCEABB);

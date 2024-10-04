@@ -19,6 +19,7 @@
                     </td>
                     <td class="input-cell">
                         <input type="text" id="first-name" v-model="FormData.first_name" />
+                         <span v-if="errors.first_name">{{errors.first_name}}</span>
                     </td>
                 </tr>
                 <tr>
@@ -154,6 +155,10 @@ export default{
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) {
         this.errors.email = "Email format is invalid.";
+    }
+    
+    if(!data.first_name.trim()){
+        this.errors.first_name="First name is a required field"
     }
 
     return Object.keys(this.errors).length==0
