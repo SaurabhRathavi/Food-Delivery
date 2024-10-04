@@ -41,7 +41,7 @@ export default {
 .header {
   margin-bottom: 50px;
   padding: 10px;
-  background-color: #eaf6f6;
+    background: linear-gradient(135deg, #F8B500, #FCEABB);
   width: 100%;
   height: 10vh;
   display: flex;
@@ -58,13 +58,15 @@ export default {
   /* margin: 2vh 0vh; */
   height: 5vh;
   width: 5vw;
-  background-color: #66bfbf;
+  background: linear-gradient(to right, #FF9966, #FF5E62);
   transition: 0.5s;
   margin-left: auto !important;
   margin-right: 2vw;
+  border: none;
+  font-weight: bold;
 }
 .logout:hover {
-  background-color: rgb(55, 99, 100);
+  background: linear-gradient(to right, #FF5E62, #FF9966);
   color: white;
   cursor: pointer;
 }
