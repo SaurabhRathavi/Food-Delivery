@@ -77,6 +77,12 @@ export default {
       },
     };
   },
+  beforeMount() {
+    if(document.cookie.split("=")[0]=='token'){
+      this.$router.push("/")
+      return;
+    }
+  },
   methods: {
     async handleSubmit() {
       if(!this.FormData.email.trim() || !this.FormData.password.trim()){
