@@ -4,7 +4,7 @@ const {loginUser} = require("./authService.js")
 
 const login = async (req, res) => {
   try {
-    console.log(req.body.email,req.body.password,req.body.role);   
+ 
   
     const jwtToken=await loginUser(req.body.email,req.body.password,req.body.role);   
     res.cookie('token', jwtToken);

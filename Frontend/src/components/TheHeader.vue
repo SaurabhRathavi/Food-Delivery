@@ -21,14 +21,13 @@ export default {
       };
     try{
 
-      const response = await axios.get("http://localhost:5000/api/v1/logout", config);
-      console.log(response);
-
+      await axios.get("http://localhost:5000/api/v1/logout", config);
       this.$router.push("/login");
       
     }
     catch(error){
         console.log(error);
+        alert(error.respone.data.message)
         
     }
 

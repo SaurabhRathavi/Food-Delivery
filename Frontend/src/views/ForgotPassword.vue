@@ -52,7 +52,7 @@ export default{
     },
     methods:{
         async handleSubmit(){
-          console.log(this.FormData.email);
+        
           if(!this.FormData.email.trim()){
                alert("pls enter email address")
                return;

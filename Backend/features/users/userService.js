@@ -23,16 +23,16 @@ const addUser=async (userData)=>{
     if(user){
         throw Error("user already exist");
     }
-    console.log(123);
+  
 
     const {role,...userInfo}=userData;
     
-    console.log(123);
+   
 
     const response=await createUser(userInfo)  
     const new_role=await getRoleByName(role)  
     await createNewUserRole(response.uuid,new_role.uuid);  
-  console.log(123);
+ 
   
     return response
 }
@@ -55,8 +55,7 @@ const addUserRole=async (userData)=>{
     const new_role=await getRoleByName(userData.role)
     const userRoleData = await getByUserAndRoleUUID(user.uuid,new_role.uuid)
     
-    console.log(userRoleData);
-    
+
      if(userRoleData.length!=0){
          throw new Error("User already exist with this email and role")
      }
