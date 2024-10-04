@@ -17,8 +17,6 @@ function validateForm(data) {
         errors.email = "Email format is invalid.";
     }
 
-
-
     return {
         isValid: Object.keys(errors).length === 0,
         errors,

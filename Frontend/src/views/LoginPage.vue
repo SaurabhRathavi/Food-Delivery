@@ -124,7 +124,6 @@ export default {
     box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.15);
     width: 100%;
     max-width: 450px;
-  
 }
 
 .header {
@@ -177,10 +176,6 @@ input:focus, select:focus {
 
 input::placeholder {
     color: #888;
-}
-
-input[type="date"] {
-    color: #555;
 }
 
 span {

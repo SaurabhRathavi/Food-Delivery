@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     async fetchUserDetails() {
-    console.log(document.cookie);
     
       const config = {
         headers: {
@@ -37,9 +36,9 @@ export default {
           config
         );
         this.user = userData.data;
-        console.log(userData);
+       
       } catch (error) {
-        console.log(error);
+        
         alert(error.response.data.message);
       }
     },

@@ -67,7 +67,7 @@ const resetPassword=async(req,res)=>{
     
     
     const response=await updatePassword(token,newPassword);
-    console.log(response);
+  
     
     res.status(200).send({
       status: "success",

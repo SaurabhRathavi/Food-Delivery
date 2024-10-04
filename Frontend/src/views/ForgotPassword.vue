@@ -46,21 +46,31 @@ export default{
     data(){
         return{
             FormData:{
-                email:"",
+                email:'',
             }
         }
     },
     methods:{
         async handleSubmit(){
-          let url=`http://localhost:5000/api/v1/forgot-password`
+          console.log(this.FormData.email);
+          if(!this.FormData.email.trim()){
+               alert("pls enter email address")
+               return;
+          }
           
+          let url=`http://localhost:5000/api/v1/forgot-password`
+
+          try{
           const response=await axios.post(url,this.FormData)
 
           if(response){
             alert("Reset link send to email")
           }
           this.$router.push("/login")
-          
+          }
+          catch(error){
+            alert(error.response.data.message)
+          }
 
             
         }
@@ -126,7 +136,7 @@ label {
 }
 
 input, select {
-    width: 100%;
+    width: 130%;
     padding: 12px 15px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
@@ -178,6 +188,7 @@ span {
     transition: all 0.3s ease;
     font-size: 1.1rem;
     margin: auto;
+    margin-left: 60px;
 }
 
 .btn-animated:hover {

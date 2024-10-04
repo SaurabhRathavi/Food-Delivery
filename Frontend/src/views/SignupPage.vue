@@ -156,14 +156,6 @@ export default{
         this.errors.email = "Email format is invalid.";
     }
 
-    // for (const key in data) {
-    //     if (data.hasOwnProperty(key) && key !== 'password' && key !== 'mobile' && key !== 'email') {
-    //         if (!data[key].trim()) {
-    //             errors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} cannot be empty or whitespace only.`;
-    //         }
-    //     }
-    // }
-
     return Object.keys(this.errors).length==0
   
     }

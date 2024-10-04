@@ -13,31 +13,27 @@ const addUser=async (userData)=>{
 
     const validationResult=validateForm(userData)
 
-  
+   
     if (!validationResult.isValid) {    
     throw Error(validationResult.errors)    
   }
-     
+
     const user=await getUserByEmail(userData.email);
 
     if(user){
         throw Error("user already exist");
     }
+    console.log(123);
 
     const {role,...userInfo}=userData;
-    console.log(userInfo);
+    
     console.log(123);
-    
 
-    const response=await createUser(userInfo)
-    console.log(1234);
-    
-    const new_role=await getRoleByName(role)
-    console.log(1234);
-    
-    await createNewUserRole(response.uuid,new_role.uuid);
-    
-
+    const response=await createUser(userInfo)  
+    const new_role=await getRoleByName(role)  
+    await createNewUserRole(response.uuid,new_role.uuid);  
+  console.log(123);
+  
     return response
 }
 
@@ -117,12 +113,9 @@ return {
 
 const updatePassword = async (token,password) => {
    
-    console.log(123);
-    console.log(token);
-    
-    
+  
     const user = await db.User.findOne({where:{reset_token:token}})
-    console.log(user);
+ 
       
   if (!user) {
      throw new Error("user not found")
