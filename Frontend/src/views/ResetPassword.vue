@@ -45,20 +45,20 @@ export default {
   methods: {
     async handleSubmit() {
       if (!this.validateForm()) return;
-      let url = `http://localhost:5000/api/v1/reset-password`;
+      let url = `http://192.1.200.168:5000/api/v1/reset-password`;
       const token = this.$route.query.token;
       if (!token) {
         alert("unauthorized Request");
         return;
       }
       try {
-        axios
-          .post(url, { token: token, newPassword: this.password })
-          .then(() => {
-            alert("Password Changed Succesfully");
-            this.$router.push("/login");
-          });
+        await axios.post(url, { token: token, newPassword: this.password });
+
+        alert("Password Changed Succesfully");
+        this.$router.push("/login");
       } catch (error) {
+        console.log(error);
+
         alert(error.response.data.message);
       }
     },

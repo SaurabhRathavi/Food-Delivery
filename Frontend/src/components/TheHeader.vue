@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {};
@@ -19,18 +19,13 @@ export default {
         },
         withCredentials: true,
       };
-    try{
-
-      await axios.get("http://localhost:5000/api/v1/logout", config);
-      this.$router.push("/login");
-      
-    }
-    catch(error){
+      try {
+        await axios.get("http://192.1.200.168:5000/api/v1/logout", config);
+        this.$router.push("/login");
+      } catch (error) {
         console.log(error);
-        alert(error.respone.data.message)
-        
-    }
-
+        alert(error.respone.data.message);
+      }
     },
   },
 };
@@ -40,16 +35,16 @@ export default {
 .header {
   margin-bottom: 50px;
   padding: 10px;
-    background: linear-gradient(135deg, #F8B500, #FCEABB);
+  background: linear-gradient(135deg, #f8b500, #fceabb);
   width: 100%;
   height: 10vh;
   display: flex;
   box-shadow: 5px 10px 18px #888888;
 }
 .heading {
-    margin-left: 1vw;
-    margin-top: 1vh;
-    font-size: 30px;
+  margin-left: 1vw;
+  margin-top: 1vh;
+  font-size: 30px;
 }
 .logout {
   border-radius: 10px;
@@ -57,7 +52,7 @@ export default {
   /* margin: 2vh 0vh; */
   height: 5vh;
   width: 5vw;
-  background: linear-gradient(to right, #FF9966, #FF5E62);
+  background: linear-gradient(to right, #ff9966, #ff5e62);
   transition: 0.5s;
   margin-left: auto !important;
   margin-right: 2vw;
@@ -65,7 +60,7 @@ export default {
   font-weight: bold;
 }
 .logout:hover {
-  background: linear-gradient(to right, #FF5E62, #FF9966);
+  background: linear-gradient(to right, #ff5e62, #ff9966);
   color: white;
   cursor: pointer;
 }

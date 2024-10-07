@@ -1,178 +1,191 @@
 <template>
-    <div class="main">
-        <div class="container">
-            <div class="header">
-                <h1>Signup</h1>
-            </div>
-            <!-- <div class="toggle-container">
+  <div class="main">
+    <div class="container">
+      <div class="header">
+        <h1>Signup</h1>
+      </div>
+      <!-- <div class="toggle-container">
                 <button class="toggle-button" id="customer">customer</button>
                 <button class="toggle-button" id="restaurnt">Restaurant</button>
                 <button class="toggle-button" id="delivery_partner">Delivery Partner</button>
             </div> -->
-           <div class="form-container">
-    <form @submit.prevent="handleSubmit">
-        <table class="form-table">
+      <div class="form-container">
+        <form @submit.prevent="handleSubmit">
+          <table class="form-table">
             <tbody>
-                <tr>
-                    <td class="label-cell">
-                        <label for="first-name">First Name</label>
-                    </td>
-                    <td class="input-cell">
-                        <input type="text" id="first-name" v-model="FormData.first_name" />
-                         <span v-if="errors.first_name">{{errors.first_name}}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">
-                        <label for="last-name">Last Name</label>
-                    </td>
-                    <td class="input-cell">
-                        <input type="text" id="last-name" v-model="FormData.last_name"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">
-                        <label for="email">Email</label>
-                    </td>
-                    <td class="input-cell">
-                        <input type="email" id="email" v-model="FormData.email"/>
-                        <span v-if="errors.email">{{errors.email}}</span>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">
-                        <label for="password">Password</label>
-                    </td>
-                    <td class="input-cell">
-                        <input type="password" id="password" v-model="FormData.password"/>
-                        <span v-if="errors.password">{{errors.password}}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">
-                        <label for="phone-number">Phone Number</label>
-                    </td>
-                    <td class="input-cell">
-                        <input type="text" id="phone-number" v-model="FormData.phone_number"/>
-                        <span v-if="errors.phone_number">{{errors.phone_number}}</span>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">
-                        <label for="dob">Date Of Birth</label>
-                    </td>
-                    <td class="input-cell">
-                        <input type="date" id="dob" v-model="FormData.dob"/>
-                    </td>
-                </tr>
-                 <tr>
-                    <td class="label-cell">
-                        <label for="role"> Signup As </label>
-                    </td>
-                    <td class="input-cell">
-                        <select name="role" id="role" v-model="FormData.role">
-                            <option default value="customer" >Customer</option>
-                            <option value="restaurant">Restaurant</option>
-                            <option value="delivery_partner">DeliveryPartner</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="submit-cell" colspan="2">
-                        <button type="submit" class="btn-animated"> Sign up</button>
-                    </td>
-                </tr>
+              <tr>
+                <td class="label-cell">
+                  <label for="first-name">First Name</label>
+                </td>
+                <td class="input-cell">
+                  <input
+                    type="text"
+                    id="first-name"
+                    v-model="FormData.first_name"
+                  />
+                  <span v-if="errors.first_name">{{ errors.first_name }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="label-cell">
+                  <label for="last-name">Last Name</label>
+                </td>
+                <td class="input-cell">
+                  <input
+                    type="text"
+                    id="last-name"
+                    v-model="FormData.last_name"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="label-cell">
+                  <label for="email">Email</label>
+                </td>
+                <td class="input-cell">
+                  <input type="email" id="email" v-model="FormData.email" />
+                  <span v-if="errors.email">{{ errors.email }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="label-cell">
+                  <label for="password">Password</label>
+                </td>
+                <td class="input-cell">
+                  <input
+                    type="password"
+                    id="password"
+                    v-model="FormData.password"
+                  />
+                  <span v-if="errors.password">{{ errors.password }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="label-cell">
+                  <label for="phone-number">Phone Number</label>
+                </td>
+                <td class="input-cell">
+                  <input
+                    type="text"
+                    id="phone-number"
+                    v-model="FormData.phone_number"
+                  />
+                  <span v-if="errors.phone_number">{{
+                    errors.phone_number
+                  }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="label-cell">
+                  <label for="dob">Date Of Birth</label>
+                </td>
+                <td class="input-cell">
+                  <input
+                    type="date"
+                    id="dob"
+                    v-model="FormData.dob"
+                    :max="new Date().toISOString().slice(0, 10)"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="label-cell">
+                  <label for="role"> Signup As </label>
+                </td>
+                <td class="input-cell">
+                  <select name="role" id="role" v-model="FormData.role">
+                    <option default value="customer">Customer</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="delivery_partner">DeliveryPartner</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td class="submit-cell" colspan="2">
+                  <button type="submit" class="btn-animated">Sign up</button>
+                </td>
+              </tr>
             </tbody>
-        </table>
-    </form>
-</div>
-<div class="forgot-password">
-        <a href="http://localhost:8080/login">Already have an account </a>
+          </table>
+        </form>
+      </div>
+      <div class="forgot-password">
+        <a href="http://192.1.200.168:8080/login">Already have an account </a>
+      </div>
     </div>
-        </div>
-    </div>
+  </div>
 </template>
 
 <script>
-const axios=require('axios')
+const axios = require("axios");
 
-export default{
-    data(){
-        return{
-            FormData:{
-                first_name:"",
-                last_name:"",
-                email:"",
-                phone_number:"",
-                password:"",
-                dob:"",
-                role:"customer",
-
-            },
-            errors:{
-
-            }
-        }
+export default {
+  data() {
+    return {
+      FormData: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone_number: "",
+        password: "",
+        dob: "",
+        role: "customer",
+      },
+      errors: {},
+    };
+  },
+  compute: {
+    currentDate() {
+      return Date.now();
     },
-    methods:{
-        async handleSubmit(){
-            if(!this.validateForm(this.FormData)) return
+  },
+  methods: {
+    async handleSubmit() {
+      if (!this.validateForm(this.FormData)) return;
 
-           try{ 
+      try {
+        let url = `http://192.1.200.168:5000/api/v1/${this.FormData.role}/signup`;
 
-          let url=`http://localhost:5000/api/v1/${this.FormData.role}/signup`
-          
-          const response=await axios.post(url,this.FormData)
- 
-          if(response){
+        const response = await axios.post(url, this.FormData);
 
-          this.$router.push("/login")
-          }
-          }
-          catch(error){
-            console.log(error);
-            
-            alert(error.response.data.message)
-          }
-            
-        },
-        validateForm(data) {
-   this.errors={}
+        if (response) {
+          this.$router.push("/login");
+        }
+      } catch (error) {
+        alert(error.response.data.message);
+      }
+    },
+    validateForm(data) {
+      this.errors = {};
 
-   
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(data.password)) {
-        this.errors.password = "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.";
-    }
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(data.password)) {
+        this.errors.password =
+          "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.";
+      }
 
-    const mobileRegex = /^\d{10}$/;
-    if (!mobileRegex.test(data.phone_number)) {
+      const mobileRegex = /^\d{10}$/;
+      if (!mobileRegex.test(data.phone_number)) {
         this.errors.phone_number = "Mobile number must be exactly 10 digits.";
-    }
+      }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
         this.errors.email = "Email format is invalid.";
-    }
-    
-    if(!data.first_name.trim()){
-        this.errors.first_name="First name is a required field"
-    }
+      }
 
-    return Object.keys(this.errors).length==0
-  
-    }
-    }
-}
- 
+      if (!data.first_name.trim()) {
+        this.errors.first_name = "First name is a required field";
+      }
+
+      return Object.keys(this.errors).length == 0;
+    },
+  },
+};
 </script>
 
-
-<style scoped >
-
-
+<style scoped>
 /* body {
 
     height: 100vh;
@@ -182,129 +195,128 @@ export default{
 } */
 
 .main {
-    background: linear-gradient(135deg, #F8B500, #FCEABB);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    padding: 20px;
+  background: linear-gradient(135deg, #f8b500, #fceabb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    max-width: 450px;
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 450px;
 }
 
-
 .header {
-    text-align: center;
-    margin-bottom: 30px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .header h1 {
-    font-size: 2.5rem;
-    color: #333;
-    font-weight: 700;
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: 700;
 }
 
 .form-container {
-    width: 100%;
+  width: 100%;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 1rem;
-    color: #555;
-    margin-right: 10px;
-    text-align: left;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #555;
+  margin-right: 10px;
+  text-align: left;
 }
 
-input, select {
-    width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    outline: none;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    background-color: #FAFAFA;
+input,
+select {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  background-color: #fafafa;
 }
 
-input:focus, select:focus {
-    border-color: #F8B500;
-    box-shadow: 0 0 8px rgba(248, 181, 0, 0.3);
+input:focus,
+select:focus {
+  border-color: #f8b500;
+  box-shadow: 0 0 8px rgba(248, 181, 0, 0.3);
 }
 
 input::placeholder {
-    color: #888;
+  color: #888;
 }
 
 input[type="date"] {
-    color: #555;
+  color: #555;
 }
 
 span {
-    color: red;
-    font-size: 0.85rem;
-    margin-top: -15px;
+  color: red;
+  font-size: 0.85rem;
+  margin-top: -15px;
 }
 
 .submit-cell {
-    /* display: flex;
+  /* display: flex;
     align-items: center;
     justify-content: center; */
-    text-align: center;
-    width: 100%;
+  text-align: center;
+  width: 100%;
 }
 
-.tbody{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.tbody {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .btn-animated {
-    background: linear-gradient(to right, #FF9966, #FF5E62);
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1.1rem;
-    margin: auto;
+  background: linear-gradient(to right, #ff9966, #ff5e62);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  margin: auto;
 }
 
 .btn-animated:hover {
-    background: linear-gradient(to right, #FF5E62, #FF9966);
-    transform: scale(1.05);
+  background: linear-gradient(to right, #ff5e62, #ff9966);
+  transform: scale(1.05);
 }
 
 .forgot-password {
-    text-align: center;
-    margin-top: 25px;
+  text-align: center;
+  margin-top: 25px;
 }
 
 .forgot-password a {
-    text-decoration: none;
-    color: #FF5E62;
-    font-weight: bold;
-    transition: color 0.3s;
+  text-decoration: none;
+  color: #ff5e62;
+  font-weight: bold;
+  transition: color 0.3s;
 }
 
 .forgot-password a:hover {
-    color: #FF9966;
+  color: #ff9966;
 }
-
 </style>

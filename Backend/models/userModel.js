@@ -28,7 +28,6 @@ module.exports = (connectDB, DataTypes) => {
       phone_number: {
         type: DataTypes.STRING,
         require: true,
-        unique: true,
       },
       password: {
         type: DataTypes.STRING,
@@ -62,11 +61,11 @@ module.exports = (connectDB, DataTypes) => {
           user.password = await bcrypt.hash(user.password, 6);
         },
         beforeUpdate: async (user) => {
-            if (user.changed("password")) {
-                user.password = await bcrypt.hash(user.password, 6);
-            }
+          if (user.changed("password")) {
+            user.password = await bcrypt.hash(user.password, 6);
+          }
         },
-    }
+      },
     }
   );
 

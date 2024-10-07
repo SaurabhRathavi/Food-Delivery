@@ -1,8 +1,8 @@
-const express=require("express")
-const {restaurantSignup}=require("../restaurants/restaurantController.js")
+const express = require("express");
+const { restaurantSignup } = require("../restaurants/restaurantController.js");
 
-const router=express.Router();
+const router = express.Router();
 
-router.post("/restaurant/signup",restaurantSignup)
+router.post("/restaurant/signup", restaurantSignup);
 
-module.exports=router
+module.exports = router;

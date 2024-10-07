@@ -15,15 +15,14 @@ export default {
     };
   },
   beforeMount() {
-    if(document.cookie.split("=")[0]!='token'){
-      this.$router.push("/login")
+    if (document.cookie.split("=")[0] != "token") {
+      this.$router.push("/login");
       return;
     }
     this.fetchUserDetails();
   },
   methods: {
     async fetchUserDetails() {
-    
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -32,13 +31,11 @@ export default {
       };
       try {
         const userData = await axios.get(
-          "http://localhost:5000/api/v1/user",
+          "http://192.1.200.168:5000/api/v1/user",
           config
         );
         this.user = userData.data;
-       
       } catch (error) {
-        
         alert(error.response.data.message);
       }
     },
