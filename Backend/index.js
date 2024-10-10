@@ -10,6 +10,8 @@ const restaurantRoute = require("./features/restaurants/restaurantApi.js");
 const customerRoute = require("./features/customer/customerApi.js");
 const deliveryPartnerRoute = require("./features/delivery_partner/deliveryPartnerApi.js");
 const cookieParser = require("cookie-parser");
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 
@@ -23,6 +25,23 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+
+const { generateKeyPairSync } = require("crypto");
+
+const { privateKey, publicKey } = generateKeyPairSync("rsa", {
+  modulusLength: 2048,
+  publicKeyEncoding: {
+    type: "spki",
+    format: "pem",
+  },
+  privateKeyEncoding: {
+    type: "pkcs8",
+    format: "pem",
+  },
+});
+
+fs.writeFileSync("./privateKey.pem", privateKey);
+fs.writeFileSync("./publicKey.pem", publicKey);
 
 app.use("/api/v1/", userRoute);
 app.use("/api/v1/", authRoute);

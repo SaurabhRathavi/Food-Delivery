@@ -4,111 +4,88 @@
       <div class="header">
         <h1>Signup</h1>
       </div>
-      <!-- <div class="toggle-container">
-                <button class="toggle-button" id="customer">customer</button>
-                <button class="toggle-button" id="restaurnt">Restaurant</button>
-                <button class="toggle-button" id="delivery_partner">Delivery Partner</button>
-            </div> -->
+
       <div class="form-container">
         <form @submit.prevent="handleSubmit">
-          <table class="form-table">
-            <tbody>
-              <tr>
-                <td class="label-cell">
-                  <label for="first-name">First Name</label>
-                </td>
-                <td class="input-cell">
-                  <input
-                    type="text"
-                    id="first-name"
-                    v-model="FormData.first_name"
-                  />
-                  <span v-if="errors.first_name">{{ errors.first_name }}</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="label-cell">
-                  <label for="last-name">Last Name</label>
-                </td>
-                <td class="input-cell">
-                  <input
-                    type="text"
-                    id="last-name"
-                    v-model="FormData.last_name"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="label-cell">
-                  <label for="email">Email</label>
-                </td>
-                <td class="input-cell">
-                  <input type="email" id="email" v-model="FormData.email" />
-                  <span v-if="errors.email">{{ errors.email }}</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="label-cell">
-                  <label for="password">Password</label>
-                </td>
-                <td class="input-cell">
-                  <input
-                    type="password"
-                    id="password"
-                    v-model="FormData.password"
-                  />
-                  <span v-if="errors.password">{{ errors.password }}</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="label-cell">
-                  <label for="phone-number">Phone Number</label>
-                </td>
-                <td class="input-cell">
-                  <input
-                    type="text"
-                    id="phone-number"
-                    v-model="FormData.phone_number"
-                  />
-                  <span v-if="errors.phone_number">{{
-                    errors.phone_number
-                  }}</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="label-cell">
-                  <label for="dob">Date Of Birth</label>
-                </td>
-                <td class="input-cell">
-                  <input
-                    type="date"
-                    id="dob"
-                    v-model="FormData.dob"
-                    :max="new Date().toISOString().slice(0, 10)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="label-cell">
-                  <label for="role"> Signup As </label>
-                </td>
-                <td class="input-cell">
-                  <select name="role" id="role" v-model="FormData.role">
-                    <option default value="customer">Customer</option>
-                    <option value="restaurant">Restaurant</option>
-                    <option value="delivery_partner">DeliveryPartner</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td class="submit-cell" colspan="2">
-                  <button type="submit" class="btn-animated">Sign up</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="full-name">
+            <div class="form-group first-name">
+              <label for="fname">First Name*</label>
+              <input
+                type="text"
+                id="fname"
+                v-model="FormData.first_name"
+                required
+                @blur="checkFirstName"
+              />
+              <span v-if="errors.first_name">{{ errors.first_name }}</span>
+            </div>
+
+            <div class="form-group last-name">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" v-model="FormData.last_name" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              v-model="FormData.email"
+              @blur="checkEmail"
+            />
+            <span class="tooltip" v-if="errors.email">{{ errors.email }}</span>
+          </div>
+
+          <div class="phone-dob">
+            <div class="form-group phone-number">
+              <label for="pnumber">Phone Number</label>
+              <input
+                type="text"
+                id="pnumber"
+                v-model="FormData.phone_number"
+                @blur="checkNumber"
+              />
+              <span v-if="errors.phone_number">{{ errors.phone_number }}</span>
+            </div>
+
+            <div class="form-group birth-date">
+              <label for="dob">Date Of Birth</label>
+              <input
+                type="date"
+                id="dob"
+                v-model="FormData.dob"
+                :max="new Date().toISOString().slice(0, 10)"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              v-model="FormData.password"
+              @blur="checkPassword"
+            />
+            <span v-if="errors.password">{{ errors.password }}</span>
+          </div>
+
+          <div class="form-group">
+            <label for="role">Signup As</label>
+            <select name="role" id="role" v-model="FormData.role">
+              <option value="customer" default>Customer</option>
+              <option value="restaurant">Restaurant</option>
+              <option value="delivery_partner">Delivery Partner</option>
+            </select>
+          </div>
+
+          <div class="form-group submit-cell">
+            <button type="submit" class="btn-animated">Sign up</button>
+          </div>
         </form>
       </div>
+
       <div class="forgot-password">
         <a href="http://192.1.200.168:8080/login">Already have an account </a>
       </div>
@@ -118,6 +95,7 @@
 
 <script>
 const axios = require("axios");
+const encryptPassword=require("../service/encryptPassword.js")
 
 export default {
   data() {
@@ -141,12 +119,13 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      if (!this.validateForm(this.FormData)) return;
-
       try {
+        const encryptedPassword=await encryptPassword(this.FormData.password)
+        console.log(encryptedPassword);
+        
         let url = `http://192.1.200.168:5000/api/v1/${this.FormData.role}/signup`;
 
-        const response = await axios.post(url, this.FormData);
+        const response = await axios.post(url, {...this.FormData,password:encryptedPassword});
 
         if (response) {
           this.$router.push("/login");
@@ -155,45 +134,44 @@ export default {
         alert(error.response.data.message);
       }
     },
-    validateForm(data) {
-      this.errors = {};
-
+    checkPassword(e) {
       const passwordRegex =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      if (!passwordRegex.test(data.password)) {
+      if (!passwordRegex.test(e.target.value)) {
         this.errors.password =
           "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.";
+      } else {
+        this.errors.password = "";
       }
-
+    },
+    checkNumber(e) {
       const mobileRegex = /^\d{10}$/;
-      if (!mobileRegex.test(data.phone_number)) {
+      if (!mobileRegex.test(e.target.value)) {
         this.errors.phone_number = "Mobile number must be exactly 10 digits.";
+      } else {
+        this.errors.phone_number = "";
       }
-
+    },
+    checkFirstName(e) {
+      if (!e.target.value.trim()) {
+        this.errors.first_name = "First name required";
+      } else {
+        this.errors.first_name = "";
+      }
+    },
+    checkEmail(e) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(data.email)) {
+      if (!emailRegex.test(e.target.value)) {
         this.errors.email = "Email format is invalid.";
+      } else {
+        this.errors.email = "";
       }
-
-      if (!data.first_name.trim()) {
-        this.errors.first_name = "First name is a required field";
-      }
-
-      return Object.keys(this.errors).length == 0;
     },
   },
 };
 </script>
 
 <style scoped>
-/* body {
-
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
 .main {
   background: linear-gradient(135deg, #f8b500, #fceabb);
   display: flex;
@@ -232,12 +210,36 @@ export default {
   width: 100%;
 }
 
+.form-group {
+  margin-bottom: 20px;
+}
+
+.full-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.phone-dob {
+  display: flex;
+  justify-content: space-between;
+}
+
+.first-name,
+.phone-number {
+  margin-right: 5px;
+  width: 50%;
+}
+
+.last-name,
+.birth-date {
+  margin-left: 5px;
+  width: 50%;
+}
 label {
   display: block;
-  margin-bottom: 5px;
   font-size: 1rem;
   color: #555;
-  margin-right: 10px;
+  margin-bottom: 5px;
   text-align: left;
 }
 
@@ -245,11 +247,8 @@ input,
 select {
   width: 100%;
   padding: 12px 15px;
-  margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  outline: none;
-  transition: all 0.3s ease;
   font-size: 1rem;
   background-color: #fafafa;
 }
@@ -271,22 +270,14 @@ input[type="date"] {
 span {
   color: red;
   font-size: 0.85rem;
-  margin-top: -15px;
+  margin-top: -10px;
 }
 
 .submit-cell {
-  /* display: flex;
-    align-items: center;
-    justify-content: center; */
   text-align: center;
   width: 100%;
 }
 
-.tbody {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 .btn-animated {
   background: linear-gradient(to right, #ff9966, #ff5e62);
   color: white;
@@ -296,7 +287,6 @@ span {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1.1rem;
-  margin: auto;
 }
 
 .btn-animated:hover {
@@ -306,7 +296,7 @@ span {
 
 .forgot-password {
   text-align: center;
-  margin-top: 25px;
+  /* margin-top: 5px; */
 }
 
 .forgot-password a {

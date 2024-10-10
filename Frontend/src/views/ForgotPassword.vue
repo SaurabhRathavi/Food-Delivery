@@ -11,23 +11,21 @@
             </div> -->
       <div class="form-container">
         <form @submit.prevent="handleSubmit">
-          <table class="form-table">
-            <tbody>
-              <tr>
-                <td class="label-cell">
-                  <label for="email">Email</label>
-                </td>
-                <td class="input-cell">
-                  <input type="email" id="email" v-model="FormData.email" />
-                </td>
-              </tr>
-              <tr>
-                <td class="submit-cell" colspan="2">
-                  <button type="submit" class="btn-animated">Send Link</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    
+            <div class="input-email">
+              <div class="label-cell">
+                <label for="email">Email</label>
+              </div>
+              <div class="input-cell">
+                <input type="email" id="email" v-model="FormData.email" />
+              </div>
+            </div>
+            <div>
+              <div class="submit-cell" colspan="2">
+                <button type="submit" class="btn-animated">Send Link</button>
+              </div>
+            </div>
+        
         </form>
       </div>
     </div>
@@ -98,16 +96,22 @@ export default {
 .header {
   text-align: center;
   margin-bottom: 30px;
+
 }
 
 .header h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   color: #333;
   font-weight: 700;
 }
 
 .form-container {
   width: 100%;
+}
+
+.input-email{
+  width: 80%;
+  margin-left: 0px;
 }
 
 label {
@@ -159,11 +163,7 @@ span {
   text-align: center;
   width: 100%;
 }
-.tbody {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+
 .btn-animated {
   background: linear-gradient(to right, #ff9966, #ff5e62);
   color: white;
@@ -174,7 +174,7 @@ span {
   transition: all 0.3s ease;
   font-size: 1.1rem;
   margin: auto;
-  margin-left: 60px;
+
 }
 
 .btn-animated:hover {
@@ -197,4 +197,6 @@ span {
 .forgot-password a:hover {
   color: #ff9966;
 }
+
+
 </style>

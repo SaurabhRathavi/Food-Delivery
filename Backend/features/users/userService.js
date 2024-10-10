@@ -16,9 +16,18 @@ const db = require("../../connection.js");
 const Op = require("sequelize");
 const validateForm = require("../../utils/validateForm.js");
 const { sendForgotPasswordMail } = require("../../utils/forgotPasswordMail.js");
+const fs = require("fs");
+const getPrivateKey = require("../../utils/getPrivateKey.js");
+const decryptPassword = require("../../utils/decryptPassword.js");
 
 const addUser = async (userData) => {
   const validationResult = validateForm(userData);
+
+  const privateKey = getPrivateKey();
+  const decryptedPassword = decryptPassword(privateKey, userData.password);
+  userData.password = decryptedPassword;
+  console.log(userData.password);
+  
 
   if (!validationResult.isValid) {
     throw Error(validationResult.errors);

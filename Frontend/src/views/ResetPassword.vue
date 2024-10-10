@@ -6,26 +6,25 @@
       </div>
       <div class="form-container">
         <form @submit.prevent="handleSubmit">
-          <table class="form-table">
-            <tbody>
-              <tr>
-                <td class="label-cell">
+          <div class="form-div">
+              <div>
+                <div class="label-cell">
                   <label for="password">Enter New Password</label>
-                </td>
-                <td class="input-cell">
+                </div>
+                <div class="input-cell">
                   <input type="password" id="password" v-model="password" />
                   <span v-if="passwordError">{{ passwordError }}</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="submit-cell" colspan="2">
+                </div>
+              </div>
+              <div>
+                <div class="submit-cell" colspan="2">
                   <button type="submit" class="btn-animated">
                     Reset Password
                   </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </div>
+              </div>
+    
+          </div>
         </form>
       </div>
     </div>

@@ -11,47 +11,45 @@
             </div> -->
       <div class="form-container">
         <form @submit.prevent="handleSubmit">
-          <table class="form-table">
-            <tbody>
-              <tr>
-                <td class="label-cell">
-                  <label for="email">Email</label>
-                </td>
-                <td class="input-cell">
-                  <input type="email" id="email" v-model="FormData.email" />
-                </td>
-              </tr>
-              <tr>
-                <td class="label-cell">
-                  <label for="password">Password</label>
-                </td>
-                <td class="input-cell">
-                  <input
-                    type="password"
-                    id="password"
-                    v-model="FormData.password"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="label-cell">
-                  <label for="role"> login As </label>
-                </td>
-                <td class="input-cell">
-                  <select name="role" id="role" v-model="FormData.role">
-                    <option value="customer" default selected>Customer</option>
-                    <option value="restaurant">Restaurant</option>
-                    <option value="delivery_partner">DeliveryPartner</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td class="submit-cell" colspan="2">
-                  <button type="submit" class="btn-animated">Login</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="form-div">
+            <div>
+              <div class="label-cell">
+                <label for="email">Email</label>
+              </div>
+              <div class="input-cell">
+                <input type="email" id="email" v-model="FormData.email" />
+              </div>
+            </div>
+            <div>
+              <div class="label-cell">
+                <label for="password">Password</label>
+              </div>
+              <div class="input-cell">
+                <input
+                  type="password"
+                  id="password"
+                  v-model="FormData.password"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="label-cell">
+                <label for="role"> login As </label>
+              </div>
+              <div class="input-cell">
+                <select name="role" id="role" v-model="FormData.role">
+                  <option value="customer" default selected>Customer</option>
+                  <option value="restaurant">Restaurant</option>
+                  <option value="delivery_partner">DeliveryPartner</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <div class="submit-cell" colspan="2">
+                <button type="submit" class="btn-animated">Login</button>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
       <div class="forgot-password">
@@ -68,6 +66,8 @@
 
 <script>
 const axios = require("axios");
+const encryptPassword=require("../service/encryptPassword.js")
+
 
 export default {
   data() {
@@ -87,6 +87,9 @@ export default {
   },
   methods: {
     async handleSubmit() {
+      const encryptedPassword=await encryptPassword(this.FormData.password)
+        console.log(encryptedPassword);
+
       if (!this.FormData.email.trim() || !this.FormData.password.trim()) {
         alert("pls fill all the fields");
         return;
@@ -101,9 +104,15 @@ export default {
       };
 
       try {
-        await axios.post(url, this.FormData, config);
+        const response = await axios.post(url, {...this.FormData,password:encryptedPassword}, config);
+
+        this.$store.commit("setUser", response.data.data);
+
+        console.log(this.$store.getters.getUser);
         this.$router.push("/");
       } catch (error) {
+        console.log(error);
+
         alert(error.response.data.message || "unable to fetch details");
       }
     },
@@ -149,8 +158,9 @@ export default {
 }
 
 .form-container {
+  /* width: 100%; */
   width: 100%;
-  margin-left: 40px;
+  padding: 0px 20px;
 }
 
 label {
@@ -176,7 +186,7 @@ select {
   border: 1px solid #ddd;
   border-radius: 10px;
   outline: none;
-  transition: all 0.3s ease;
+  divansition: all 0.3s ease;
   font-size: 1rem;
   background-color: #fafafa;
 }
@@ -204,11 +214,7 @@ span {
   text-align: center;
   width: 100%;
 }
-.tbody {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+
 .btn-animated {
   background: linear-gradient(to right, #ff9966, #ff5e62);
   color: white;
@@ -216,14 +222,14 @@ span {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  divansition: all 0.3s ease;
   font-size: 1.1rem;
   margin: auto;
 }
 
 .btn-animated:hover {
   background: linear-gradient(to right, #ff5e62, #ff9966);
-  transform: scale(1.05);
+  divansform: scale(1.05);
 }
 
 .forgot-password {
@@ -235,7 +241,7 @@ span {
   text-decoration: none;
   color: #ff5e62;
   font-weight: bold;
-  transition: color 0.3s;
+  divansition: color 0.3s;
 }
 
 .forgot-password a:hover {

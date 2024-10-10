@@ -12,6 +12,8 @@ const customerSignup = async (req, res) => {
       data: response,
     });
   } catch (error) {
+    console.log(error);
+
     res.status(400).send({
       status: "failed",
       message: error.message,
