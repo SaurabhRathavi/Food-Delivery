@@ -1,25 +1,27 @@
 <template>
-  <the-header></the-header>
+  <app-navbar />
   <h1>hello {{ user.first_name }}</h1>
 </template>
 
 <script>
-import TheHeader from "@/components/TheHeader.vue";
+
 import axios from "axios";
+import AppNavbar from '../components/AppNavbar.vue';
 
 export default {
-  components: { TheHeader },
+  components: { AppNavbar },
   data() {
     return {
       user: {},
     };
   },
   beforeMount() {
-    if (document.cookie.split("=")[0] != "token") {
+    if (!this.$store.getters.getUser) {
       this.$router.push("/login");
       return;
     }
-    this.fetchUserDetails();
+    this.user=this.$store.getters.getUser
+    // this.fetchUserDetails();
   },
   methods: {
     async fetchUserDetails() {

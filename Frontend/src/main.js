@@ -1,11 +1,16 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store/index.js"
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store'
+import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
+import AppNavbar from './components/AppNavbar.vue'
 
-const app=createApp(App)
-app.use(router)
-app.use(store)
+loadFonts()
 
-
-app.mount("#app");
+createApp(App)
+  .use(router)
+  .use(store)
+  .use(vuetify)
+  .component('app-navbar',AppNavbar)
+  .mount('#app')
