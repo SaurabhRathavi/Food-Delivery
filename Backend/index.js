@@ -12,6 +12,8 @@ const deliveryPartnerRoute = require("./features/delivery_partner/deliveryPartne
 const cookieParser = require("cookie-parser");
 const fs = require("fs");
 const path = require("path");
+const customError = require("./utils/customError.js");
+const globalErrorHandler=require("./utils/globalErrorHandler.js")
 
 const app = express();
 
@@ -48,6 +50,12 @@ app.use("/api/v1/", authRoute);
 app.use("/api/v1/", restaurantRoute);
 app.use("/api/v1/", customerRoute);
 app.use("/api/v1/", deliveryPartnerRoute);
+app.use("*", (req, res, next) => {
+ const err = new customError("Page not found", 404);
+ next(err);
+});
+
+app.use(globalErrorHandler);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("server started");

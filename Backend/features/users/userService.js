@@ -19,25 +19,22 @@ const { sendForgotPasswordMail } = require("../../utils/forgotPasswordMail.js");
 const fs = require("fs");
 const getPrivateKey = require("../../utils/getPrivateKey.js");
 const decryptPassword = require("../../utils/decryptPassword.js");
+const customError = require("../../utils/customError.js");
 
 const addUser = async (userData) => {
   const validationResult = validateForm(userData);
 
-  const privateKey = getPrivateKey();
-  const decryptedPassword = decryptPassword(privateKey, userData.password);
-  userData.password = decryptedPassword;
-  console.log(userData.password);
-  
-
   if (!validationResult.isValid) {
-    throw Error(validationResult.errors);
+    throw new customError(validationResult.errors, 400);
   }
-
   const user = await getUserByEmail(userData.email);
 
   if (user) {
-    throw Error("user already exist");
+    throw new customError("user already exist", 400);
   }
+  const privateKey = getPrivateKey();
+  const decryptedPassword = decryptPassword(privateKey, userData.password);
+  userData.password = decryptedPassword;
 
   const { role, ...userInfo } = userData;
 
@@ -54,18 +51,18 @@ const addUserRole = async (userData) => {
   const user = await getUserByEmail(userData.email);
 
   if (!user) {
-    throw Error("User is not exist with this email");
+    throw new customError("User is not exist with this email", 400);
   }
   const passwordMatch = await bcrypt.compare(userData.password, user.password);
   if (!passwordMatch) {
-    throw Error("wrong password");
+    throw new customError("wrong password", 401);
   }
 
   const new_role = await getRoleByName(userData.role);
   const userRoleData = await getByUserAndRoleUUID(user.uuid, new_role.uuid);
 
   if (userRoleData.length != 0) {
-    throw new Error("User already exist with this email and role");
+    throw new customError("User already exist with this email and role", 400);
   }
 
   await createNewUserRole(user.uuid, new_role.uuid);
@@ -83,7 +80,7 @@ const createResetToken = async (email, req) => {
   const user = await getUserByEmail(email);
 
   if (!user) {
-    throw new Error("No user exist with this email");
+    throw new customError("No user exist with this email", 400);
   }
 
   const token = crypto.randomBytes(32).toString("hex");
@@ -104,13 +101,16 @@ const updatePassword = async (token, password) => {
   const user = await getUserByResetToken(token);
 
   if (!user) {
-    throw new Error("user not found");
+    throw new customError("Token is not valid", 401);
   }
 
   const matchPasword = await bcrypt.compare(password, user.password);
 
   if (matchPasword) {
-    throw Error("New password must be different from old password");
+    throw new customError(
+      "New password must be different from old password",
+      400
+    );
   }
 
   user.password = password;
