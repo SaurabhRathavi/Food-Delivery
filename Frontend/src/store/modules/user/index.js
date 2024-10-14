@@ -13,8 +13,17 @@ export default {
     setUser(state, user) {
       state.user = user;
     },
-    removeUser(state){
-      state.user=null
-    }
+    removeUser(state) {
+      state.user = null;
+    },
+  },
+  actions: {
+    login(context,user){
+      context.commit('setUser',user);
+    },
+    logout(context) {
+      context.commit("removeUser");
+      localStorage.clear();
+    },
   },
 };

@@ -1,51 +1,69 @@
 <template>
   <div>
     <app-navbar />
-   
-    <v-card class="mx-auto mt-10 pa-5" width='400'>
+
+    <v-card class="mx-auto mt-10 pa-5 base-card elevation-2" width="400">
       <header>
         <h1>Signup</h1>
       </header>
-      <v-form @submit.prevent="handleSubmit" class="mt-5">
+      <v-form @submit.prevent="handleSubmit" class="mt-5" v-model="isFormValid">
         <v-text-field
           v-model="FormData.first_name"
-          label="First Name"
+          label="First Name*"
           :rules="firstNameRules"
+          prepend-inner-icon="mdi-account"
         ></v-text-field>
         <v-text-field
           v-model="FormData.last_name"
           label="Last Name"
+          prepend-inner-icon="mdi-account"
         ></v-text-field>
 
         <v-text-field
           v-model="FormData.email"
-          label="Email"
+          label="Email*"
+          required
           :rules="emailRules"
+          prepend-inner-icon="mdi-email"
         ></v-text-field>
         <v-text-field
           type="password"
           v-model="FormData.password"
-          label="Password"
+          label="Password*"
+          required
           :rules="passwordRules"
+          prepend-inner-icon="mdi-lock"
         ></v-text-field>
         <v-text-field
           v-model="FormData.phone_number"
-          label="Phone Number"
-          :rules=phonNumberRules
+          label="Phone Number*"
+          required
+          :rules="phonNumberRules"
+          prepend-inner-icon="mdi-phone"
         ></v-text-field>
         <v-select
           clearable
           v-model="FormData.role"
           label="Role"
-          :items="['customer', 'restaurant', 'delivery_Partner']"
+          :items="['customer', 'restaurant', 'delivery_partner']"
+          prepend-inner-icon="mdi-account-group"
         ></v-select>
-        <v-btn class="mt-2" type="submit" block>Signup</v-btn>
+        <v-btn class="mt-2" color="yellow-darken-4" type="submit" block :disabled='!isFormValid'
+          >Signup</v-btn
+        >
       </v-form>
-        <p class='navigation'>
-          Already have an account ? <router-link to="/login">Login</router-link>
-        </p>
+      <p class="navigation">
+        Already have an account ? <router-link to="/login">Login</router-link>
+      </p>
     </v-card>
- 
+    <v-snackbar
+      v-model="snackbar.show"
+      :timeout="snackbar.timeout"
+      color="red"
+      top
+    >
+      {{ snackbar.message }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -65,12 +83,12 @@ export default {
         dob: "",
         role: "customer",
       },
-      errors: {},
+      isFormValid:false,
       firstNameRules: [
         (value) => {
-          if (value?.length >= 3) return true;
+          if (value?.length >= 1) return true;
 
-          return "First name must be at least 3 characters.";
+          return "First name is a required field";
         },
       ],
       emailRules: [
@@ -93,6 +111,11 @@ export default {
         (value) =>
           /^\d{10}$/.test(value) || "Mobile number must be exactly 10 digits.",
       ],
+      snackbar: {
+        show: false,
+        message: "",
+        timeout: 1000,
+      },
     };
   },
   compute: {
@@ -103,6 +126,8 @@ export default {
   methods: {
     async handleSubmit() {
       try {
+
+
         const encryptedPassword = await encryptPassword(this.FormData.password);
 
         let url = `http://192.1.200.168:5000/api/v1/${this.FormData.role}/signup`;
@@ -116,48 +141,19 @@ export default {
           this.$router.push("/login");
         }
       } catch (error) {
-        alert(error.response.data.message);
+        this.showError(error.response.data.message);
       }
     },
-    checkPassword(e) {
-      const passwordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      if (!passwordRegex.test(e.target.value)) {
-        this.errors.password =
-          "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.";
-      } else {
-        this.errors.password = "";
-      }
-    },
-    checkNumber(e) {
-      const mobileRegex = /^\d{10}$/;
-      if (!mobileRegex.test(e.target.value)) {
-        this.errors.phone_number = "Mobile number must be exactly 10 digits.";
-      } else {
-        this.errors.phone_number = "";
-      }
-    },
-    checkFirstName(e) {
-      if (!e.target.value.trim()) {
-        this.errors.first_name = "First name required";
-      } else {
-        this.errors.first_name = "";
-      }
-    },
-    checkEmail(e) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(e.target.value)) {
-        this.errors.email = "Email format is invalid.";
-      } else {
-        this.errors.email = "";
-      }
+    showError(errorMessage) {
+      this.snackbar.message = errorMessage;
+      this.snackbar.show = true;
     },
   },
 };
 </script>
 
 <style scoped>
-.navigation{
+.navigation {
   margin-top: 15px;
   text-align: center;
 }

@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import AppNavbar from './components/AppNavbar.vue'
 
+
 loadFonts()
 
 createApp(App)

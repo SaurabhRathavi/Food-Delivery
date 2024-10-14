@@ -4,9 +4,8 @@
 </template>
 
 <script>
-
 import axios from "axios";
-import AppNavbar from '../components/AppNavbar.vue';
+import AppNavbar from "../components/AppNavbar.vue";
 
 export default {
   components: { AppNavbar },
@@ -20,7 +19,7 @@ export default {
       this.$router.push("/login");
       return;
     }
-    this.user=this.$store.getters.getUser
+    this.user = this.$store.getters.getUser;
     // this.fetchUserDetails();
   },
   methods: {

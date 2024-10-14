@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-navbar />
-    <v-card class="mx-auto mt-10 pa-5" width="400">
+    <v-card class="mx-auto mt-10 pa-5 base-card elevation-2" width="400">
       <header>
         <h1>Forgot Password</h1>
       </header>
@@ -10,8 +10,9 @@
           v-model="FormData.email"
           label="Email"
           :rules="emailRules"
+          prepend-inner-icon='mdi-email'
         ></v-text-field>
-        <v-btn class="mt-2" type="submit" block>Send Link</v-btn>
+        <v-btn class="mt-2" type="submit" color='yellow-darken-4' block>Send Link</v-btn>
       </v-form>
     </v-card>
   </div>

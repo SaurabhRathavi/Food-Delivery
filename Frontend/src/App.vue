@@ -16,3 +16,11 @@ export default {
   }),
 }
 </script>
+
+<style>
+.base-card{
+  border-radius: 1rem;
+}
+
+
+</style>
