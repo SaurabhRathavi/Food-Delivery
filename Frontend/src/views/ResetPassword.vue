@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      let url = `http://192.1.200.168:5000/api/v1/reset-password`;
+      let url = `${process.env.VUE_APP_SERVER_ADDRESS}/api/v1/reset-password`;
       const token = this.$route.query.token;
 
       if (!token) {

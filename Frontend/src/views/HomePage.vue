@@ -32,7 +32,7 @@ export default {
       };
       try {
         const userData = await axios.get(
-          "http://192.1.200.168:5000/api/v1/user",
+          `${process.env.VUE_APP_SERVER_ADDRESS}/api/v1/user`,
           config
         );
         this.user = userData.data;

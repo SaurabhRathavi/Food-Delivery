@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar class="h-200 elevation-4" density="compact" >
+  <v-toolbar class="h-200 elevation-4" density="compact">
     <v-toolbar-title>Food Delivery</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn v-if="isUserLogin" class="mr-10 red darken-3" @click="logoutUser">
@@ -23,12 +23,12 @@ export default {
           },
           withCredentials: true,
         };
-        await axios.get("http://192.1.200.168:5000/api/v1/logout", config);
+        await axios.get(`${process.env.APP_VUE_SERVER_ADDRESS}/api/v1/logout`, config);
         this.$store.dispatch("logout");
         this.$router.push("/login");
       } catch (error) {
         console.log(error);
-        alert(error.respone.data.message);
+        alert(error.response.data.message);
       }
     },
   },

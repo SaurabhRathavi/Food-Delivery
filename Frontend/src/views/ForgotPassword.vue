@@ -10,9 +10,11 @@
           v-model="FormData.email"
           label="Email"
           :rules="emailRules"
-          prepend-inner-icon='mdi-email'
+          prepend-inner-icon="mdi-email"
         ></v-text-field>
-        <v-btn class="mt-2" type="submit" color='yellow-darken-4' block>Send Link</v-btn>
+        <v-btn class="mt-2" type="submit" color="yellow-darken-4" block
+          >Send Link</v-btn
+        >
       </v-form>
     </v-card>
   </div>
@@ -43,7 +45,7 @@ export default {
         return;
       }
 
-      let url = `http://192.1.200.168:5000/api/v1/forgot-password`;
+      let url = `${process.env.VUE_APP_SERVER_ADDRESS}/api/v1/forgot-password`;
 
       try {
         const response = await axios.post(url, this.FormData);

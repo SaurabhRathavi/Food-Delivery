@@ -1,4 +1,4 @@
-import {createStore} from "vuex";
+import { createStore } from "vuex";
 import userModule from "./modules/user/index.js";
 import createPersistedState from "vuex-persistedstate";
 
@@ -17,4 +17,4 @@ const store = createStore({
   ],
 });
 
-export default store
+export default store;

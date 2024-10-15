@@ -18,8 +18,8 @@ export default {
     },
   },
   actions: {
-    login(context,user){
-      context.commit('setUser',user);
+    login(context, user) {
+      context.commit("setUser", user);
     },
     logout(context) {
       context.commit("removeUser");

@@ -85,14 +85,16 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      
       if (!this.FormData.email.trim() || !this.FormData.password.trim()) {
         this.showError("Pls fill all the fields");
         return;
       }
-        const encryptedPassword = await encryptPassword(this.FormData.password);
+      const encryptedPassword = await encryptPassword(this.FormData.password);
+      console.log(process.env);
 
-      let url = `http://192.1.200.168:5000/api/v1/login`;
+      console.log(process.env.VUE_APP_SERVER_ADDRESS);
+
+      let url = `${process.env.VUE_APP_SERVER_ADDRESS}/api/v1/login`;
       const config = {
         headers: {
           "Content-Type": "application/json",

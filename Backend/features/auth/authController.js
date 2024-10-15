@@ -16,7 +16,7 @@ const login = asyncErrorHandler(async (req, res) => {
   res.status(200).send({
     status: "success",
     message: "login succesfull",
-    data: response.user,
+    data: response.userData,
   });
 });
 

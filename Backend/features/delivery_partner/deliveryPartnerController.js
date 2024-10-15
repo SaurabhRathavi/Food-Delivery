@@ -1,9 +1,12 @@
 const { addUser } = require("../users/userService.js");
 const asyncErrorHandler = require("../../utils/asyncErrorHandler.js");
+const customError = require("../../utils/customError.js");
 
 const deliveryPartnerSignup = asyncErrorHandler(async (req, res) => {
   if (req.body.role != "delivery_partner") {
-    throw Error("You can singnup as only delivery partner through this route");
+    throw customError(
+      "You can singnup as only delivery partner through this route"
+    );
   }
 
   const response = await addUser(req.body);

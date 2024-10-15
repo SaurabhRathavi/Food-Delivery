@@ -9,8 +9,8 @@ const getPrivateKey = require("../../utils/getPrivateKey.js");
 const decryptPassword = require("../../utils/decryptPassword.js");
 const customError = require("../../utils/customError.js");
 
-const loginUser = async (email, password, role) => {
-  const user = await getUserByEmail(email);
+const loginUser = async (user_email, password, role) => {
+  const user = await getUserByEmail(user_email);
 
   if (!user) {
     throw new customError("user is not available", 400);
@@ -38,9 +38,10 @@ const loginUser = async (email, password, role) => {
 
   const jwtToken = signToken(user.first_name, user.email);
 
-  //  const {first_name,last_name,email}=user.dataValues;
-  //  const userData={first_name,last_name,email}
-  return { user, jwtToken };
+  const { first_name, last_name, email } = user.dataValues;
+  const userData = { first_name, last_name, email };
+
+  return { userData, jwtToken };
 };
 
 module.exports = { loginUser };

@@ -41,6 +41,15 @@
           :rules="phonNumberRules"
           prepend-inner-icon="mdi-phone"
         ></v-text-field>
+        <!-- <v-date-input label="DOB" v-model="FormData.dob"></v-date-input> -->
+        <v-date-input
+          label="Select a date"
+          prepend-icon=""
+          prepend-inner-icon="$calendar"
+          required
+          v-model="FormData.sdate"
+          :max="new Date().toISOString().slice(0, 10)"
+        ></v-date-input>
         <v-select
           clearable
           v-model="FormData.role"
@@ -48,7 +57,12 @@
           :items="['customer', 'restaurant', 'delivery_partner']"
           prepend-inner-icon="mdi-account-group"
         ></v-select>
-        <v-btn class="mt-2" color="yellow-darken-4" type="submit" block :disabled='!isFormValid'
+        <v-btn
+          class="mt-2"
+          color="yellow-darken-4"
+          type="submit"
+          block
+          :disabled="!isFormValid"
           >Signup</v-btn
         >
       </v-form>
@@ -68,10 +82,12 @@
 </template>
 
 <script>
+import { VDateInput } from "vuetify/labs/VDateInput";
 const axios = require("axios");
 const encryptPassword = require("../service/encryptPassword.js");
 
 export default {
+  components: { VDateInput },
   data() {
     return {
       FormData: {
@@ -80,10 +96,11 @@ export default {
         email: "",
         phone_number: "",
         password: "",
+        sdate: null,
         dob: "",
         role: "customer",
       },
-      isFormValid:false,
+      isFormValid: false,
       firstNameRules: [
         (value) => {
           if (value?.length >= 1) return true;
@@ -126,11 +143,14 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-
+        this.FormData.dob = `${this.FormData.sdate.getDate()}/${
+          this.FormData.sdate.getMonth() + 1
+        }/${this.FormData.sdate.getFullYear()}`;
+        console.log(this.FormData);
 
         const encryptedPassword = await encryptPassword(this.FormData.password);
 
-        let url = `http://192.1.200.168:5000/api/v1/${this.FormData.role}/signup`;
+        let url = `${process.env.VUE_APP_SERVER_ADDRESS}/api/v1/${this.FormData.role}/signup`;
 
         const response = await axios.post(url, {
           ...this.FormData,
